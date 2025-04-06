@@ -1,4 +1,38 @@
 data "aws_iam_policy_document" "tiko_nudge" {
+  
+  statement {
+    sid = "consumeSqs"
+    actions = local.consume_queue
+    resources = flatten([
+      data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
+      {{ data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"] | to_yaml | replace("\n", "") | indent(4) }}
+    ])
+  }
+  
+  
+  
+  statement {
+    sid = "publishSqs"
+    actions = local.publish_queue
+    resources = flatten([
+      data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
+      {{ data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"] | to_yaml | replace("\n", "") | indent(4) }}
+    ])
+  }
+  
+  
+  
+  statement {
+    sid = "publishTopic"
+    actions = local.publish_topic
+    resources = flatten([
+      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-test"],
+      {{ data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-test"] | to_yaml | replace("\n", "") | indent(4) }}
+    ])
+  }
+  
+}
+
   statement {
     sid = "publishSqs"
 
