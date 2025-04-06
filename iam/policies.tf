@@ -1,4 +1,12 @@
 data "aws_iam_policy_document" "tiko_nudge" {
+
+  # Append new resources based on permissions
+  
+
+  
+
+  
+}
   statement {
     sid = "publishSqs"
 
