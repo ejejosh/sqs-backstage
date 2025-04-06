@@ -1,4 +1,12 @@
 data "aws_iam_policy_document" "tiko_nudge" {
+
+  
+
+  
+
+  
+
+}
   statement {
     sid = "publishSqs"
 
