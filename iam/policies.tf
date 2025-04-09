@@ -1,4 +1,35 @@
 data "aws_iam_policy_document" "tiko_nudge" {
+  
+  statement {
+    sid = "consumeSqs"
+    actions = local.consume_queue
+    resources = [
+      data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"]
+    ]
+  }
+  
+  
+  
+  statement {
+    sid = "publishS
+    actions = local.publish_queue
+    resources = [
+      data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"]
+    ]
+  }
+  
+  
+  
+  statement {
+    sid = "publishTopic"
+    actions = local.publish_topic
+    resources = [
+      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-test"]
+    ]
+  }
+  
+}
+
   statement {
     sid = "publishSqs"
 
