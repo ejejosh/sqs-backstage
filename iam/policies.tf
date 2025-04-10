@@ -1,10 +1,4 @@
-data "aws_iam_policy_document" "tiko_nudge" {
-  statement {
-    sid = "publishSqs"
-
-    actions = local.publish_queue
-
-    resources = [
+$1+\ndata.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-handle-inbound-message-command"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
