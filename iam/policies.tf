@@ -4,7 +4,8 @@ data "aws_iam_policy_document" "tiko_nudge" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
+
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-handle-inbound-message-command"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
@@ -20,7 +21,8 @@ data "aws_iam_policy_document" "tiko_nudge" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
+
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-nudge-offer-validations"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-nudge-participants"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-nudge-scheduler-notifications"],
