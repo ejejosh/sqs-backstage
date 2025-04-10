@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "tiko_nudge" {
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-mobile-inbox-service"],
       "arn:aws:sqs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${var.environment}-*-acl-give-tiko-miles",
     ]
-
+data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
 
   }
 
@@ -26,7 +26,7 @@ data "aws_iam_policy_document" "tiko_nudge" {
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-nudge-scheduler-notifications"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-acl-give-tiko-miles-responses"]
     ]
-
+data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
   }
 
   statement {
@@ -43,7 +43,6 @@ data "aws_iam_policy_document" "tiko_nudge" {
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-trial-incentive-given"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-trial-results"]
     ]
-
   }
 
   statement {
