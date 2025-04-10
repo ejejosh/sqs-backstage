@@ -4,7 +4,7 @@ data "aws_iam_policy_document" "tiko_nudge" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-handle-inbound-message-command"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
@@ -20,7 +20,7 @@ data "aws_iam_policy_document" "tiko_nudge" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-nudge-offer-validations"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-nudge-participants"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-nudge-scheduler-notifications"],
@@ -34,8 +34,7 @@ data "aws_iam_policy_document" "tiko_nudge" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-miles-incentive-given"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-miles-incentive-given"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-reminder-sent"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-trial-started"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-trial-ended"],
@@ -64,7 +63,7 @@ data "aws_iam_policy_document" "tiko_nudge_reminders" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-handle-inbound-message-command"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
@@ -80,7 +79,7 @@ data "aws_iam_policy_document" "tiko_nudge_reminders" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-nudge-reminders-service"]
     ]
 
@@ -91,8 +90,7 @@ data "aws_iam_policy_document" "tiko_nudge_reminders" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-reminder-sent"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-reminder-sent"]
     ]
 
   }
@@ -115,7 +113,7 @@ data "aws_iam_policy_document" "tiko_nudge_lottery" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"]
     ]
@@ -127,7 +125,7 @@ data "aws_iam_policy_document" "tiko_nudge_lottery" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-lottery-service"]
     ]
 
@@ -138,8 +136,7 @@ data "aws_iam_policy_document" "tiko_nudge_lottery" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-nudge-lottery"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-nudge-lottery"]
     ]
 
   }
@@ -162,7 +159,7 @@ data "aws_iam_policy_document" "tiko_service_validation" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-service-validation-service"]
     ]
 
@@ -173,7 +170,7 @@ data "aws_iam_policy_document" "tiko_service_validation" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-platform-token-token-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"]
     ]
@@ -185,8 +182,7 @@ data "aws_iam_policy_document" "tiko_service_validation" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-service-validation"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-service-validation"]
     ]
 
   }
@@ -209,7 +205,7 @@ data "aws_iam_policy_document" "tiko_nudge_trials" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-mobile-inbox-service"]
@@ -223,7 +219,7 @@ data "aws_iam_policy_document" "tiko_nudge_trials" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-trials-service"]
     ]
 
@@ -234,8 +230,7 @@ data "aws_iam_policy_document" "tiko_nudge_trials" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-nudge-trials"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-nudge-trials"]
     ]
 
   }
@@ -258,7 +253,7 @@ data "aws_iam_policy_document" "tiko_nudge_announcements" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-announcements-service"]
     ]
 
@@ -269,8 +264,7 @@ data "aws_iam_policy_document" "tiko_nudge_announcements" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-nudge-announcements"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-nudge-announcements"],
     ]
 
   }
@@ -291,7 +285,7 @@ data "aws_iam_policy_document" "tiko_nudge_announcements" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-mobile-inbox-service"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"]
@@ -317,7 +311,7 @@ data "aws_iam_policy_document" "tiko_platform_file_storer" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-platform-file-storer"]
     ]
 
@@ -328,8 +322,7 @@ data "aws_iam_policy_document" "tiko_platform_file_storer" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-platform-file-storer"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-platform-file-storer"],
     ]
 
   }
@@ -350,7 +343,7 @@ data "aws_iam_policy_document" "tiko_platform_file_storer" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-platform-file-storer"]
     ]
 
@@ -375,7 +368,7 @@ data "aws_iam_policy_document" "tiko_platform_mobile_authenticator" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-mobile-authenticator-service"]
     ]
 
@@ -386,8 +379,7 @@ data "aws_iam_policy_document" "tiko_platform_mobile_authenticator" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-mobile-sessions"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-mobile-sessions"]
     ]
   }
 
@@ -409,7 +401,7 @@ data "aws_iam_policy_document" "tiko_platform_mobile_inbox" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-mobile-inbox-service"]
     ]
 
@@ -420,8 +412,7 @@ data "aws_iam_policy_document" "tiko_platform_mobile_inbox" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-mobile-inbox-messages"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-mobile-inbox-messages"]
     ]
   }
 
@@ -443,7 +434,7 @@ data "aws_iam_policy_document" "tiko_feedback" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-start-conversation"]
     ]
@@ -456,7 +447,7 @@ data "aws_iam_policy_document" "tiko_feedback" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-feedback-service"]
     ]
 
@@ -467,8 +458,7 @@ data "aws_iam_policy_document" "tiko_feedback" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-feedback-requested"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-feedback-requested"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-feedback-ended"],
     ]
 
@@ -492,7 +482,7 @@ data "aws_iam_policy_document" "tiko_message_gateway" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       "arn:aws:sqs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${var.environment}-*-acl-gateway-messages",
       "arn:aws:sqs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${var.environment}-sms-gateway-service",
       "arn:aws:sqs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${var.environment}-telegram-gateway-service",
@@ -506,7 +496,7 @@ data "aws_iam_policy_document" "tiko_message_gateway" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-send-messages"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-message-gateway-participants"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-platform-message-gateway-inbound-messages"],
@@ -521,8 +511,7 @@ data "aws_iam_policy_document" "tiko_message_gateway" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-participant-message-sent"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-participant-message-sent"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-participant-message-received"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-unknown-participant-message-received"]
     ]
@@ -547,7 +536,7 @@ data "aws_iam_policy_document" "tiko_platform_message_gateway" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       "arn:aws:sqs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${var.environment}-*-acl-gateway-messages",
       "arn:aws:sqs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${var.environment}-sms-gateway-service",
       "arn:aws:sqs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${var.environment}-telegram-gateway-service",
@@ -561,7 +550,7 @@ data "aws_iam_policy_document" "tiko_platform_message_gateway" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-send-messages"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-message-gateway-participants"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-platform-message-gateway-inbound-messages"],
@@ -576,8 +565,7 @@ data "aws_iam_policy_document" "tiko_platform_message_gateway" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-participant-message-sent"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-participant-message-sent"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-participant-message-received"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-unknown-participant-message-received"]
     ]
@@ -602,7 +590,7 @@ data "aws_iam_policy_document" "tiko_platform_sms_gateway" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-sms-gateway-service"]
     ]
 
@@ -613,8 +601,7 @@ data "aws_iam_policy_document" "tiko_platform_sms_gateway" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-inbound-messages"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-inbound-messages"]
     ]
 
   }
@@ -637,7 +624,7 @@ data "aws_iam_policy_document" "tiko_platform_telegram_gateway" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-telegram-gateway-service"]
     ]
 
@@ -648,8 +635,7 @@ data "aws_iam_policy_document" "tiko_platform_telegram_gateway" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-inbound-messages"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-inbound-messages"]
     ]
 
   }
@@ -672,7 +658,7 @@ data "aws_iam_policy_document" "tiko_platform_whatsapp_gateway" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-whatsapp-gateway-service"]
     ]
 
@@ -683,8 +669,7 @@ data "aws_iam_policy_document" "tiko_platform_whatsapp_gateway" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-inbound-messages"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-inbound-messages"]
     ]
 
   }
@@ -707,7 +692,7 @@ data "aws_iam_policy_document" "tiko_fraud" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-fraud-queue"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-fraud-business-created-queue"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-fraud-business-updated-queue"],
@@ -731,8 +716,7 @@ data "aws_iam_policy_document" "tiko_fraud" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-facial-recognition-notification"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-facial-recognition-notification"],
     ]
   }
 
@@ -780,8 +764,7 @@ data "aws_iam_policy_document" "tiko_fraud_dashboard" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-trust-fraud-dashboard-report-template"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-trust-fraud-dashboard-report-template"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-trust-fraud-dashboard-report"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-trust-fraud-dashboard-service-validation-verifications"],
     ]
@@ -803,7 +786,7 @@ data "aws_iam_policy_document" "tiko_fraud_dashboard" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-trust-status-tracker-commands"],
     ]
   }
@@ -830,7 +813,7 @@ data "aws_iam_policy_document" "tiko_facial_recognition" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-trust-facial-recognition-delete-connector"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-trust-facial-recognition-create-connector"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-trust-facial-recognition-update-connector"],
@@ -868,8 +851,7 @@ data "aws_iam_policy_document" "tiko_facial_recognition" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-facial-recognition-notification"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-facial-recognition-notification"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-facial-recognition-matched-face"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-facial-recognition-sign-in-attempts-exceeded"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-facial-recognition-validation"],
@@ -921,7 +903,7 @@ data "aws_iam_policy_document" "tiko_platform_token" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-platform-token-token-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-platform-token-scheduler"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-platform-token-chatter-messages"],
@@ -934,7 +916,7 @@ data "aws_iam_policy_document" "tiko_platform_token" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
     ]
@@ -946,8 +928,7 @@ data "aws_iam_policy_document" "tiko_platform_token" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-token-created-deleted"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-token-created-deleted"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-token-validations"],
     ]
   }
@@ -971,7 +952,7 @@ data "aws_iam_policy_document" "tiko_connect_brainiac" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-brainiac-contacts"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-brainiac-accounts"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-brainiac-scheduler"],
@@ -987,7 +968,7 @@ data "aws_iam_policy_document" "tiko_connect_brainiac" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-start-conversation"],
@@ -1000,8 +981,7 @@ data "aws_iam_policy_document" "tiko_connect_brainiac" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-brainiac-contacts"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-brainiac-contacts"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-brainiac-accounts"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-brainiac-organisation"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-brainiac-connector"],
@@ -1029,7 +1009,7 @@ data "aws_iam_policy_document" "tiko_connect_crm_bridge" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-brainiac-contacts"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-brainiac-accounts"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-brainiac-scheduler"],
@@ -1045,7 +1025,7 @@ data "aws_iam_policy_document" "tiko_connect_crm_bridge" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
     ]
 
@@ -1055,8 +1035,7 @@ data "aws_iam_policy_document" "tiko_connect_crm_bridge" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-brainiac-contacts"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-brainiac-contacts"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-brainiac-accounts"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-brainiac-organisation"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-brainiac-connector"],
@@ -1085,7 +1064,7 @@ data "aws_iam_policy_document" "tiko_platform_scheduler" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
     ]
 
@@ -1096,8 +1075,7 @@ data "aws_iam_policy_document" "tiko_platform_scheduler" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-scheduler-notifications"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-scheduler-notifications"],
     ]
 
   }
@@ -1140,8 +1118,7 @@ data "aws_iam_policy_document" "eventbridge_scheduler" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-scheduler-notifications"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-scheduler-notifications"],
     ]
 
   }
@@ -1165,7 +1142,7 @@ data "aws_iam_policy_document" "tiko_rafiki_card" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-rafiki-card-state-mvc-events"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-rafiki-card-scheduler"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-rafiki-terminate-card"],
@@ -1180,8 +1157,7 @@ data "aws_iam_policy_document" "tiko_rafiki_card" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-rafiki-cards-generated"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-rafiki-cards-generated"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-rafiki-card-state-changed"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-rafiki-card-card-authentication"]
     ]
@@ -1193,7 +1169,7 @@ data "aws_iam_policy_document" "tiko_rafiki_card" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-start-conversation"]
@@ -1233,7 +1209,7 @@ data "aws_iam_policy_document" "tiko_loyalty_spending" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-ledger-ingestion"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-rafiki-card-card-authentication"],
     ]
@@ -1244,7 +1220,7 @@ data "aws_iam_policy_document" "tiko_loyalty_spending" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-spending-ledger-responses"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-spending-campaign-ingestion"],
     ]
@@ -1255,8 +1231,7 @@ data "aws_iam_policy_document" "tiko_loyalty_spending" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-spending-redemption-events"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-spending-redemption-events"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-spending-request-events"]
     ]
   }
@@ -1291,7 +1266,7 @@ data "aws_iam_policy_document" "tiko_loyalty_perks" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
     ]
   }
@@ -1301,7 +1276,7 @@ data "aws_iam_policy_document" "tiko_loyalty_perks" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-perks-opportunities"],
     ]
   }
@@ -1311,8 +1286,7 @@ data "aws_iam_policy_document" "tiko_loyalty_perks" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-perks-events"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-perks-events"],
     ]
   }
 
@@ -1347,7 +1321,7 @@ data "aws_iam_policy_document" "tiko_loyalty_reporter" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-mobile-inbox-service"],
     ]
@@ -1358,7 +1332,7 @@ data "aws_iam_policy_document" "tiko_loyalty_reporter" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-reporter-operator-ingestion"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-reporter-relay-ingestion"],
     ]
@@ -1369,8 +1343,7 @@ data "aws_iam_policy_document" "tiko_loyalty_reporter" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-reporter-relay-events"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-reporter-relay-events"],
     ]
   }
 
@@ -1392,7 +1365,7 @@ data "aws_iam_policy_document" "tiko_loyalty_budget" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-ledger-ingestion"],
     ]
   }
@@ -1402,7 +1375,7 @@ data "aws_iam_policy_document" "tiko_loyalty_budget" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-budget-warden-ingestion"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-budget-ledger-responses"],
     ]
@@ -1413,8 +1386,7 @@ data "aws_iam_policy_document" "tiko_loyalty_budget" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-budget-fund-events"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-budget-fund-events"],
     ]
   }
 
@@ -1436,7 +1408,7 @@ data "aws_iam_policy_document" "tiko_loyalty_cashouts" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-cashouts-ongoing-cashouts"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-ledger-ingestion"],
@@ -1450,7 +1422,7 @@ data "aws_iam_policy_document" "tiko_loyalty_cashouts" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-cashouts-notifications"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-cashout-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-cashouts-ongoing-cashouts"],
@@ -1467,8 +1439,7 @@ data "aws_iam_policy_document" "tiko_loyalty_cashouts" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-cashout-events"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-cashout-events"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-provider-callbacks"]
     ]
   }
@@ -1491,7 +1462,7 @@ data "aws_iam_policy_document" "tiko_loyalty_incentives" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-incentive-opportunities"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-incentives-ledger-responses"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-incentives-notifications"],
@@ -1505,7 +1476,7 @@ data "aws_iam_policy_document" "tiko_loyalty_incentives" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-ledger-ingestion"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-incentives-evaluator-ingestion"],
@@ -1517,8 +1488,7 @@ data "aws_iam_policy_document" "tiko_loyalty_incentives" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-incentive-given"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-incentive-given"]
     ]
   }
 
@@ -1540,7 +1510,7 @@ data "aws_iam_policy_document" "tiko_loyalty_ledger" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-ledger-ingestion"],
     ]
   }
@@ -1550,7 +1520,7 @@ data "aws_iam_policy_document" "tiko_loyalty_ledger" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
     ]
   }
@@ -1560,8 +1530,7 @@ data "aws_iam_policy_document" "tiko_loyalty_ledger" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-ledger-journal-events"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-ledger-journal-events"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-ledger-owner-events"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-ledger-responses"]
     ]
@@ -1585,7 +1554,7 @@ data "aws_iam_policy_document" "tiko_loyalty_entities" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-loyalty-entities-ingestion"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-redrive-tiko-loyalty-entities-ingestion-new"],
     ]
@@ -1596,8 +1565,7 @@ data "aws_iam_policy_document" "tiko_loyalty_entities" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-entities-events"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-loyalty-entities-events"],
     ]
   }
 
@@ -1644,7 +1612,7 @@ data "aws_iam_policy_document" "tiko_rafiki_enrolment" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-rafiki-unknown-participant-message"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-rafiki-enrolment-chatter-messages"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-rafiki-enrolment-scheduler"],
@@ -1657,7 +1625,7 @@ data "aws_iam_policy_document" "tiko_rafiki_enrolment" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-start-conversation"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
@@ -1670,8 +1638,7 @@ data "aws_iam_policy_document" "tiko_rafiki_enrolment" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-rafiki-enrolment"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-rafiki-enrolment"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-rafiki-profiles"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-rafiki-mvc-profiles"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-participant-message-received"],
@@ -1702,7 +1669,7 @@ data "aws_iam_policy_document" "tiko_platform_chatter" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message-high-priority"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-participant-inbound"],
@@ -1718,8 +1685,7 @@ data "aws_iam_policy_document" "tiko_platform_chatter" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-conversation-ended"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-conversation-ended"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-conversation-started"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-participant-request-received"]
     ]
@@ -1731,7 +1697,7 @@ data "aws_iam_policy_document" "tiko_platform_chatter" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-send-messages"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-handle-inbound-message-command"]
@@ -1758,7 +1724,7 @@ data "aws_iam_policy_document" "tiko_platform_voice_biometrics" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-voice-biometrics-service"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-voice-biometrics-rafiki-profiles"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-platform-voice-biometrics-scheduler"]
@@ -1770,8 +1736,7 @@ data "aws_iam_policy_document" "tiko_platform_voice_biometrics" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-voice-events"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-voice-events"]
     ]
 
   }
@@ -1781,7 +1746,7 @@ data "aws_iam_policy_document" "tiko_platform_voice_biometrics" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
     ]
 
@@ -1841,7 +1806,7 @@ data "aws_iam_policy_document" "tiko_rafiki_profile" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-rafiki-profile-scheduler"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-rafiki-profile-chatter-messages"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-profile-mvc-rafikis"],
@@ -1856,8 +1821,7 @@ data "aws_iam_policy_document" "tiko_rafiki_profile" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-rafiki-profiles"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-rafiki-profiles"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-rafiki-contacts"],
     ]
 
@@ -1868,7 +1832,7 @@ data "aws_iam_policy_document" "tiko_rafiki_profile" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-start-conversation"],
@@ -1917,7 +1881,7 @@ data "aws_iam_policy_document" "tiko_trust_status_tracker" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-status-tracker-facial-recognition-validation"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-trust-status-tracker-mfa-login-session"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-trust-status-tracker-mfa-logout-session"],
@@ -1935,7 +1899,7 @@ data "aws_iam_policy_document" "tiko_trust_status_tracker" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-mobile-authenticator-service"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-mobile-inbox-service"],
@@ -1947,8 +1911,7 @@ data "aws_iam_policy_document" "tiko_trust_status_tracker" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-trust-status-tracker-suspicious-actor"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-trust-status-tracker-suspicious-actor"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-trust-status-changes"],
     ]
 
@@ -2038,7 +2001,7 @@ data "aws_iam_policy_document" "tiko_offer_validation_decider" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-offer-validation-rafiki-events"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-offer-validation-connect-events"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-offer-validation-machine-learning-outcome"],
@@ -2051,8 +2014,7 @@ data "aws_iam_policy_document" "tiko_offer_validation_decider" {
     actions = local.publish_topic
 
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-offer-validation-product-photo-claim-denied-events"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-offer-validation-product-photo-claim-denied-events"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-offer-validation-product-photo-claim-verified-events"],
 
     ]
@@ -2077,8 +2039,7 @@ data "aws_iam_policy_document" "tiko_offer_validation_mobile_api" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-offer-validation-product-photo-claim-created"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-offer-validation-product-photo-claim-created"]
     ]
 
   }
@@ -2100,7 +2061,7 @@ data "aws_iam_policy_document" "tiko_opportunity_cerebro" {
     sid     = "consumeSqs"
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-opportunity-cerebro-notifications"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-opportunity-cerebro-location-ingestion"],
     ]
@@ -2111,7 +2072,7 @@ data "aws_iam_policy_document" "tiko_opportunity_cerebro" {
 
     actions = local.publish_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
     ]
   }
@@ -2121,8 +2082,7 @@ data "aws_iam_policy_document" "tiko_opportunity_cerebro" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-opportunity-location-events"],
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-opportunity-location-events"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-opportunity-country-events"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-opportunity-project-events"],
     ]
@@ -2214,8 +2174,7 @@ data "aws_iam_policy_document" "external_partner_offer_validation" {
 
     actions = local.publish_topic
 
-    resources = [
-      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-external-partner-offer-validation"]
+    resources = [      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-external-partner-offer-validation"]
     ]
   }
 
