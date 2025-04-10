@@ -20,7 +20,8 @@ data "aws_iam_policy_document" "tiko_nudge" {
 
     actions = local.consume_queue
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-test"],
+
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-nudge-offer-validations"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-nudge-participants"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-tiko-nudge-scheduler-notifications"],
@@ -34,7 +35,8 @@ data "aws_iam_policy_document" "tiko_nudge" {
 
     actions = local.publish_topic
 
-    resources = [
+    resources = [data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-test"],
+
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-miles-incentive-given"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-reminder-sent"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-trial-started"],
