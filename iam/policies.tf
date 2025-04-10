@@ -116,6 +116,7 @@ data "aws_iam_policy_document" "tiko_nudge_lottery" {
     actions = local.publish_queue
 
     resources = [
+      data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-last"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-scheduler-commands"],
       data.terraform_remote_state.sqs_sns.outputs.queue_arns["${var.environment}-chatter-send-message"]
     ]
