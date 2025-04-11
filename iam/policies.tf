@@ -186,6 +186,7 @@ data "aws_iam_policy_document" "tiko_service_validation" {
     actions = local.publish_topic
 
     resources = [
+      data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-test"],
       data.terraform_remote_state.sqs_sns.outputs.topic_arns["${var.environment}-tiko-service-validation"]
     ]
 
